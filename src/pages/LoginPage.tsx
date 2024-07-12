@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { registerRequest } from "../api/auth";
-import { User } from "../api/auth";
+import { User } from "../types/type";
 
 const API = import.meta.env.VITE_API;
 

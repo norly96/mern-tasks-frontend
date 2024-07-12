@@ -11,19 +11,33 @@ import {
   Image,
   Link,
   Text,
+  AlertIcon,
+  Alert,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { registerRequest } from "../api/auth";
-import { User } from "../api/auth";
-
-const API = import.meta.env.VITE_API;
+import { User } from "../types/type";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const RegisterPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<User>();
+
+  const { signup, isAuthenticated, errors: registerError } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/tasks");
+  }, [isAuthenticated]);
+
+  const onSubmit = handleSubmit(async (values: User) => {
+    await signup(values);
+  });
+
   return (
     <Flex
       minH={"100vh"}
@@ -35,6 +49,12 @@ const RegisterPage = () => {
         <Stack align={"center"}>
           <Image src="/public/logo.png" alt="Logo" />
           <Heading fontSize={"4xl"}>Sign up to your account</Heading>
+          {registerError.map((error: any, i) => (
+            <Alert status="error" key={i} mb={-7} borderRadius="md">
+              <AlertIcon />
+              {error}
+            </Alert>
+          ))}
         </Stack>
         <Box
           rounded={"lg"}
@@ -42,15 +62,7 @@ const RegisterPage = () => {
           boxShadow={"lg"}
           p={8}
         >
-          <form
-            onSubmit={handleSubmit(async (values) => {
-              //console.log(JSON.stringify(values));
-              console.log({ API });
-
-              const res = await registerRequest(values);
-              console.log(res);
-            })}
-          >
+          <form onSubmit={onSubmit}>
             <Stack spacing={4}>
               <FormControl id="username">
                 <FormLabel>Username</FormLabel>
