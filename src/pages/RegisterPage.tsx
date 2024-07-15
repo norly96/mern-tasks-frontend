@@ -24,7 +24,7 @@ const RegisterPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = useForm<User>();
 
   const { signup, isAuthenticated, errors: registerError } = useAuth();

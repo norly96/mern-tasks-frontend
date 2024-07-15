@@ -11,12 +11,12 @@ import {
   Image,
   Link,
   Text,
+  AlertIcon,
+  Alert,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { registerRequest } from "../api/auth";
 import { User } from "../types/type";
-
-const API = import.meta.env.VITE_API;
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
   const {
@@ -24,6 +24,13 @@ const LoginPage = () => {
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<User>();
+
+  const { signin, errors: loginError } = useAuth();
+
+  const onSubmit = handleSubmit(async (values: User) => {
+    await signin(values);
+  });
+
   return (
     <Flex
       minH={"100vh"}
@@ -35,6 +42,12 @@ const LoginPage = () => {
         <Stack align={"center"}>
           <Image src="/public/logo.png" alt="Logo" />
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
+          {loginError.map((error: any, i) => (
+            <Alert status="error" key={i} mb={1} borderRadius="md">
+              <AlertIcon />
+              {error}
+            </Alert>
+          ))}
         </Stack>
         <Box
           rounded={"lg"}
@@ -42,15 +55,7 @@ const LoginPage = () => {
           boxShadow={"lg"}
           p={8}
         >
-          <form
-            onSubmit={handleSubmit(async (values) => {
-              //console.log(JSON.stringify(values));
-              console.log({ API });
-
-              const res = await registerRequest(values);
-              console.log(res);
-            })}
-          >
+          <form onSubmit={onSubmit}>
             <Stack spacing={4}>
               <FormControl id="email">
                 <FormLabel>Email address</FormLabel>
