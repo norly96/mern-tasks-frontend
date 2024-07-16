@@ -9,7 +9,6 @@ import {
   Heading,
   useColorModeValue,
   Image,
-  Link,
   Text,
   AlertIcon,
   Alert,
@@ -19,6 +18,7 @@ import { User } from "../types/type";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
   const {
@@ -102,7 +102,10 @@ const RegisterPage = () => {
           </form>
           <Stack pt={6}>
             <Text align={"center"}>
-              Already a user? <Link color={"blue.400"}>Login</Link>
+              Already a user?{" "}
+              <Link to="/login">
+                <Text color={"blue.400"}>Login</Text>
+              </Link>
             </Text>
           </Stack>
         </Box>

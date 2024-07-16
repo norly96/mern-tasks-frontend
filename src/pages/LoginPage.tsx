@@ -9,7 +9,6 @@ import {
   Heading,
   useColorModeValue,
   Image,
-  Link,
   Text,
   AlertIcon,
   Alert,
@@ -17,6 +16,7 @@ import {
 import { useForm } from "react-hook-form";
 import { User } from "../types/type";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const {
@@ -88,7 +88,10 @@ const LoginPage = () => {
           </form>
           <Stack pt={6}>
             <Text align={"center"}>
-              Are you a new member? <Link color={"blue.400"}>Register</Link>
+              Are you a new member?{" "}
+              <Link to="/register">
+                <Text color={"blue.400"}>Register</Text>
+              </Link>
             </Text>
           </Stack>
         </Box>

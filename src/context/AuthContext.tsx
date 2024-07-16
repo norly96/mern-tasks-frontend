@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 import { User } from "../types/type";
 import { loginRequest, registerRequest } from "../api/auth";
 
@@ -47,11 +53,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const res = await loginRequest(user);
       console.log(res.data);
+      setUser(res.data);
+      setIsAuthenticated(true);
     } catch (error: any) {
       console.log(error);
       setErrors(error.response.data.message);
     }
   };
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      const timer = setTimeout(() => {
+        setErrors([]);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
 
   return (
     <AuthContext.Provider
