@@ -16,7 +16,8 @@ import {
 import { useForm } from "react-hook-form";
 import { User } from "../types/type";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const LoginPage = () => {
   const {
@@ -25,7 +26,12 @@ const LoginPage = () => {
     formState: { isSubmitting },
   } = useForm<User>();
 
-  const { signin, errors: loginError } = useAuth();
+  const { signin, isAuthenticated, errors: loginError } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) navigate("/tasks");
+  }, [isAuthenticated]);
 
   const onSubmit = handleSubmit(async (values: User) => {
     await signin(values);
@@ -87,12 +93,12 @@ const LoginPage = () => {
             </Stack>
           </form>
           <Stack pt={6}>
-            <Text align={"center"}>
-              Are you a new member?{" "}
+            <Flex gap={5}>
+              Are you a new member?
               <Link to="/register">
                 <Text color={"blue.400"}>Register</Text>
               </Link>
-            </Text>
+            </Flex>
           </Stack>
         </Box>
       </Stack>

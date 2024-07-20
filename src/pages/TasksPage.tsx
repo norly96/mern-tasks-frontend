@@ -1,7 +1,7 @@
-import React from "react";
+import { Box } from "@chakra-ui/react";
 
 const TasksPage = () => {
-  return <div>TasksPage</div>;
+  return <Box>TASKS PAGE</Box>;
 };
 
 export default TasksPage;

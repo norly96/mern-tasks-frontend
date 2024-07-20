@@ -101,12 +101,12 @@ const RegisterPage = () => {
             </Stack>
           </form>
           <Stack pt={6}>
-            <Text align={"center"}>
+            <Flex gap={5}>
               Already a user?{" "}
               <Link to="/login">
                 <Text color={"blue.400"}>Login</Text>
               </Link>
-            </Text>
+            </Flex>
           </Stack>
         </Box>
       </Stack>

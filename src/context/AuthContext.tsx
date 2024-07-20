@@ -6,7 +6,7 @@ import {
   useEffect,
 } from "react";
 import { User } from "../types/type";
-import { loginRequest, registerRequest } from "../api/auth";
+import { loginRequest, registerRequest, verifyToken } from "../api/auth";
 
 interface AuthContextType {
   user: User | null;
@@ -14,6 +14,7 @@ interface AuthContextType {
   signin: (user: User) => Promise<void>;
   isAuthenticated: boolean;
   errors: [];
+  loading: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -22,6 +23,7 @@ export const AuthContext = createContext<AuthContextType>({
   signin: async () => {},
   isAuthenticated: false,
   errors: [],
+  loading: true,
 });
 
 export const useAuth = () => {
@@ -36,6 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [errors, setErrors] = useState<[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const signup = async (user: User) => {
     try {
@@ -55,9 +58,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.log(res.data);
       setUser(res.data);
       setIsAuthenticated(true);
+      localStorage.setItem("token", res.data.token);
     } catch (error: any) {
-      console.log(error);
-      setErrors(error.response.data.message);
+      if (Array.isArray(error.response.data.message)) {
+        return setErrors(error.response.data.message);
+      }
+      setErrors(error.message);
     }
   };
 
@@ -70,9 +76,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [errors]);
 
+  useEffect(() => {
+    async function checkLogin() {
+      const Token = localStorage.getItem("token");
+      console.log(Token);
+
+      if (!Token) {
+        setIsAuthenticated(false);
+        setLoading(false);
+        setUser(null);
+        return;
+      }
+      try {
+        const res = await verifyToken();
+        setIsAuthenticated(true);
+        setLoading(false);
+        console.log(res);
+      } catch (error) {
+        setIsAuthenticated(false);
+        setLoading(false);
+      }
+    }
+    checkLogin();
+  }, []);
+
   return (
     <AuthContext.Provider
-      value={{ user, signup, signin, isAuthenticated, errors }}
+      value={{ user, signup, signin, isAuthenticated, errors, loading }}
     >
       {children}
     </AuthContext.Provider>
