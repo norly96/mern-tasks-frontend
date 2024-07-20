@@ -14,7 +14,7 @@ const ProtectedRoute = () => {
       </Box>
     );
 
-  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (!loading && !isAuthenticated) return <Navigate to="/login" replace />;
   return <Outlet />;
 };
 
