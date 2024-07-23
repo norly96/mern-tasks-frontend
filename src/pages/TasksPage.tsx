@@ -1,5 +1,3 @@
-"use client";
-
 import {
   IconButton,
   Avatar,
@@ -17,7 +15,6 @@ import {
   FlexProps,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuItem,
   Image,
   MenuList,
@@ -34,6 +31,8 @@ import {
   ModalHeader,
   ModalOverlay,
   Textarea,
+  Grid,
+  Switch,
 } from "@chakra-ui/react";
 
 import {
@@ -45,6 +44,11 @@ import {
   Icon as IconProp,
 } from "@tabler/icons-react";
 import { useAuth } from "../context/AuthContext";
+import { useForm } from "react-hook-form";
+import { Task } from "../types/type";
+import { useTasks } from "../context/TaskContext";
+import { useEffect } from "react";
+import TaskCard from "../components/TaskCard";
 
 interface LinkItemProps {
   name: string;
@@ -146,7 +150,7 @@ const NavItem = ({ icon, children, href, onClick }: NavItemProps) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -209,9 +213,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>Profile</MenuItem>
-              <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={() => logout()}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
@@ -231,6 +233,23 @@ const TaskPage = () => {
     onOpen: onModalOpen,
     onClose: onModalClose,
   } = useDisclosure();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<Task>();
+
+  const { tasks, getTasks, createTask } = useTasks();
+
+  const onSubmit = handleSubmit((data: Task, e: any) => {
+    createTask(data);
+    e.target.reset();
+  });
+
+  useEffect(() => {
+    getTasks();
+  }, [tasks]);
 
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
@@ -255,33 +274,77 @@ const TaskPage = () => {
       <MobileNav onOpen={onDrawerOpen} />
 
       <Modal isOpen={isModalOpen} onClose={onModalClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create new Task</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Title</FormLabel>
-              <Input placeholder="Title" />
-            </FormControl>
+        <form onSubmit={onSubmit}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Create new Task</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <FormControl id="title">
+                <FormLabel>Title</FormLabel>
+                <Input
+                  placeholder="Title"
+                  {...register("title", { required: true })}
+                />
+              </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>Description</FormLabel>
-              <Textarea placeholder="Description" />
-            </FormControl>
-          </ModalBody>
+              <FormControl mt={4} id="description">
+                <FormLabel>Description</FormLabel>
+                <Textarea
+                  placeholder="Description"
+                  {...register("description", { required: true })}
+                />
+              </FormControl>
 
-          <ModalFooter>
-            <Button colorScheme="green" mr={3}>
-              Create
-            </Button>
-            <Button onClick={onModalClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
+              <FormControl
+                display="flex"
+                alignItems="center"
+                mt={4}
+                id="status"
+              >
+                <FormLabel htmlFor="status" mb="0">
+                  Completed:
+                </FormLabel>
+                <Switch
+                  id="status"
+                  colorScheme="green"
+                  {...register("status")}
+                />
+              </FormControl>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                colorScheme="green"
+                mr={3}
+                isLoading={isSubmitting}
+                type="submit"
+              >
+                Create
+              </Button>
+              <Button onClick={onModalClose}>Cancel</Button>
+            </ModalFooter>
+          </ModalContent>
+        </form>
       </Modal>
 
       <Box ml={{ base: 0, md: 60 }} p="4">
         {/* Content */}
+        {tasks.length === 0 ? (
+          <Text>NO TASKS</Text>
+        ) : (
+          <Grid
+            templateColumns={{
+              base: "repeat(1, 1fr)",
+              md: "repeat(2, 1fr)",
+              lg: "repeat(3, 1fr)",
+            }}
+          >
+            {tasks.map((task) => (
+              <TaskCard task={task} key={task._id} />
+            ))}
+          </Grid>
+        )}
       </Box>
     </Box>
   );
