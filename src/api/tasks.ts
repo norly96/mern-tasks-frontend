@@ -13,4 +13,4 @@ export const updateTaskRequest = async (task: Task) =>
   axios.put(`/api/tasks/${task._id}`, task);
 
 export const deleteTaskRequest = async (id: string) =>
-  axios.delete(`/api/tasks${id}`);
+  axios.delete(`/api/tasks/${id}`);

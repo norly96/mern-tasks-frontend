@@ -12,6 +12,7 @@ interface AuthContextType {
   user: User | null;
   signup: (user: User) => Promise<void>;
   signin: (user: User) => Promise<void>;
+  logout: () => void;
   isAuthenticated: boolean;
   errors: [];
   loading: boolean;
@@ -21,6 +22,7 @@ export const AuthContext = createContext<AuthContextType>({
   user: null,
   signup: async () => {},
   signin: async () => {},
+  logout: async () => {},
   isAuthenticated: false,
   errors: [],
   loading: true,
@@ -67,6 +69,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    setUser(null);
+  };
+
   useEffect(() => {
     if (errors.length > 0) {
       const timer = setTimeout(() => {
@@ -91,6 +99,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const res = await verifyToken();
         setIsAuthenticated(true);
         setLoading(false);
+        setUser(res);
         console.log(res);
       } catch (error) {
         setIsAuthenticated(false);
@@ -102,7 +111,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, signup, signin, isAuthenticated, errors, loading }}
+      value={{ user, signup, signin, logout, isAuthenticated, errors, loading }}
     >
       {children}
     </AuthContext.Provider>

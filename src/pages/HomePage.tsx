@@ -8,8 +8,10 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import Footer from "../components/Footer";
+import { useAuth } from "../context/AuthContext";
 
 const HomePage = () => {
+  const { isAuthenticated } = useAuth();
   return (
     <Stack minH={"100vh"}>
       <Flex p={8} flex={1} align={"center"} justify={"center"}>
@@ -43,19 +45,34 @@ const HomePage = () => {
             again!
           </Text>
           <Stack direction={{ base: "column", md: "row" }} spacing={4}>
-            <Button
-              rounded={"full"}
-              bg={"green.400"}
-              color={"white"}
-              _hover={{
-                bg: "green.500",
-              }}
-            >
-              <Link href="/register">Sign Up</Link>
-            </Button>
-            <Button rounded={"full"}>
-              <Link href="/login">Sign In</Link>
-            </Button>
+            {isAuthenticated ? (
+              <Button
+                rounded={"full"}
+                bg={"green.400"}
+                color={"white"}
+                _hover={{
+                  bg: "green.500",
+                }}
+              >
+                <Link href="/tasks">To Tasks</Link>
+              </Button>
+            ) : (
+              <>
+                <Button
+                  rounded={"full"}
+                  bg={"green.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "green.500",
+                  }}
+                >
+                  <Link href="/register">Sign Up</Link>
+                </Button>
+                <Button rounded={"full"}>
+                  <Link href="/login">Sign In</Link>
+                </Button>
+              </>
+            )}
           </Stack>
         </Stack>
       </Flex>

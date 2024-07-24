@@ -49,6 +49,7 @@ import { Task } from "../types/type";
 import { useTasks } from "../context/TaskContext";
 import { useEffect } from "react";
 import TaskCard from "../components/TaskCard";
+import ContainerTaskPage from "../components/ContainerTaskPage";
 
 interface LinkItemProps {
   name: string;
@@ -247,10 +248,6 @@ const TaskPage = () => {
     e.target.reset();
   });
 
-  useEffect(() => {
-    getTasks();
-  }, [tasks]);
-
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
@@ -328,24 +325,7 @@ const TaskPage = () => {
         </form>
       </Modal>
 
-      <Box ml={{ base: 0, md: 60 }} p="4">
-        {/* Content */}
-        {tasks.length === 0 ? (
-          <Text>NO TASKS</Text>
-        ) : (
-          <Grid
-            templateColumns={{
-              base: "repeat(1, 1fr)",
-              md: "repeat(2, 1fr)",
-              lg: "repeat(3, 1fr)",
-            }}
-          >
-            {tasks.map((task) => (
-              <TaskCard task={task} key={task._id} />
-            ))}
-          </Grid>
-        )}
-      </Box>
+      <ContainerTaskPage />
     </Box>
   );
 };

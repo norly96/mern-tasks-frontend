@@ -1,17 +1,23 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 import { Task } from "../types/type";
-import { createTaskRequest, getTasksRequest } from "../api/tasks.ts";
+import {
+  createTaskRequest,
+  deleteTaskRequest,
+  getTasksRequest,
+} from "../api/tasks.ts";
 
 interface TaskContextType {
   tasks: Task[];
   getTasks: () => Promise<void>;
   createTask: (task: Task) => Promise<void>;
+  deleteTask: (id: string) => Promise<void>;
 }
 
 export const TaskContext = createContext<TaskContextType>({
   tasks: [],
   getTasks: async () => {},
   createTask: async () => {},
+  deleteTask: async () => {},
 });
 
 export const useTasks = () => {
@@ -26,12 +32,8 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const getTasks = async () => {
-    try {
-      const res = await getTasksRequest();
-      setTasks(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await getTasksRequest();
+    setTasks(res.data);
   };
 
   const createTask = async (task: Task) => {
@@ -42,8 +44,17 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
       console.log(error);
     }
   };
+
+  const deleteTask = async (id: string) => {
+    try {
+      const res = await deleteTaskRequest(id);
+      if (res.status === 204) setTasks(tasks.filter((task) => task._id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <TaskContext.Provider value={{ tasks, getTasks, createTask }}>
+    <TaskContext.Provider value={{ tasks, getTasks, createTask, deleteTask }}>
       {children}
     </TaskContext.Provider>
   );
