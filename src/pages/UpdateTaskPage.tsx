@@ -41,7 +41,6 @@ const UpdateTaskPage = () => {
     const loadTask = async () => {
       if (params.id) {
         const task = await getTask(params.id);
-
         setValue("title", task.title);
         setValue("description", task.description);
         setValue("status", task.status);

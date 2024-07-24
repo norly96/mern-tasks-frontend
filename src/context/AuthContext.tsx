@@ -17,6 +17,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   errors: [];
   loading: boolean;
+  reloading: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -27,6 +28,7 @@ export const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   errors: [],
   loading: true,
+  reloading: false,
 });
 
 export const useAuth = () => {
@@ -42,6 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [errors, setErrors] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [reloading, setReloading] = useState<boolean>(false);
 
   const { tasks } = useTasks();
 
@@ -64,6 +67,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(res.data);
       setIsAuthenticated(true);
       localStorage.setItem("token", res.data.token);
+      setReloading(true);
+      // Simular una recarga de la página con un pequeño retraso
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     } catch (error: any) {
       if (Array.isArray(error.response.data.message)) {
         return setErrors(error.response.data.message);
@@ -116,7 +124,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, signup, signin, logout, isAuthenticated, errors, loading }}
+      value={{
+        user,
+        signup,
+        signin,
+        logout,
+        isAuthenticated,
+        errors,
+        loading,
+        reloading,
+      }}
     >
       {children}
     </AuthContext.Provider>

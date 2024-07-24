@@ -27,6 +27,7 @@ const TaskCard = ({ task }: TaskProps) => {
         w="17rem"
         spacing={2}
         p={4}
+        bg={"white"}
         border="1px solid"
         borderColor={useColorModeValue("gray.400", "gray.600")}
         rounded="md"

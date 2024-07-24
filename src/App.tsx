@@ -7,6 +7,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./ProtectedRoute";
 import { TaskProvider } from "./context/TaskContext";
 import HomePage from "./pages/HomePage";
+import UpdateTaskPage from "./pages/UpdateTaskPage";
 
 function App() {
   return (
@@ -20,8 +21,7 @@ function App() {
 
             <Route element={<ProtectedRoute />}>
               <Route path="/tasks" element={<TasksPage />} />
-              <Route path="/create-task" element={<h1>New Tasks</h1>} />
-              <Route path="/tasks/:id" element={<h1>Update Tasks</h1>} />
+              <Route path="/tasks/:id" element={<UpdateTaskPage />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>
           </Routes>
