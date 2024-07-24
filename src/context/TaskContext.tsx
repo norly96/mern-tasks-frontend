@@ -4,6 +4,8 @@ import {
   createTaskRequest,
   deleteTaskRequest,
   getTasksRequest,
+  getTaskRequest,
+  updateTaskRequest,
 } from "../api/tasks.ts";
 
 interface TaskContextType {
@@ -11,6 +13,8 @@ interface TaskContextType {
   getTasks: () => Promise<void>;
   createTask: (task: Task) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
+  getTask: (id: string) => Promise<any>;
+  updateTask: (id: string, task: Task) => Promise<void>;
 }
 
 export const TaskContext = createContext<TaskContextType>({
@@ -18,6 +22,8 @@ export const TaskContext = createContext<TaskContextType>({
   getTasks: async () => {},
   createTask: async () => {},
   deleteTask: async () => {},
+  getTask: async () => {},
+  updateTask: async () => {},
 });
 
 export const useTasks = () => {
@@ -53,8 +59,36 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
       console.log(error);
     }
   };
+
+  const getTask = async (id: string) => {
+    try {
+      const res = await getTaskRequest(id);
+      console.log(res.data);
+      return res.data; //res.data
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateTask = async (id: string, task: Task) => {
+    try {
+      await updateTaskRequest(id, task);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, getTasks, createTask, deleteTask }}>
+    <TaskContext.Provider
+      value={{
+        tasks,
+        getTasks,
+        createTask,
+        deleteTask,
+        getTask,
+        updateTask,
+      }}
+    >
       {children}
     </TaskContext.Provider>
   );

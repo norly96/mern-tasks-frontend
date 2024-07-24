@@ -2,23 +2,17 @@ import { IconNotes } from "@tabler/icons-react";
 import { Task } from "../types/type";
 import {
   chakra,
-  Box,
-  Stack,
-  Link,
   HStack,
   Text,
-  Container,
   GridItem,
-  Avatar,
-  Tooltip,
-  StackProps,
   Divider,
   useColorModeValue,
   Button,
   Heading,
+  Stack,
+  Link,
 } from "@chakra-ui/react";
 import { useTasks } from "../context/TaskContext";
-// Here we have used react-icons package for the icons
 
 interface TaskProps {
   task: Task;
@@ -26,6 +20,7 @@ interface TaskProps {
 
 const TaskCard = ({ task }: TaskProps) => {
   const { deleteTask } = useTasks();
+
   return (
     <GridItem maxW="5xl" p={{ base: 5, md: 6 }}>
       <Stack
@@ -59,14 +54,14 @@ const TaskCard = ({ task }: TaskProps) => {
         </Text>
 
         <Divider />
-        <Heading as="h1">
+        <Heading as="h1" m={2}>
           {task.status === true ? (
             <Text fontSize="md" color="green.500">
-              Complete
+              Completed
             </Text>
           ) : (
             <Text fontSize="md" color="red.500">
-              Incomplete
+              Pending
             </Text>
           )}
         </Heading>
@@ -75,7 +70,9 @@ const TaskCard = ({ task }: TaskProps) => {
           <Button colorScheme="red" onClick={() => deleteTask(task._id)}>
             Delete
           </Button>
-          <Button colorScheme="green">Edit</Button>
+          <Button colorScheme="green">
+            <Link href={`/tasks/${task._id}`}>Edit</Link>
+          </Button>
         </HStack>
       </Stack>
     </GridItem>

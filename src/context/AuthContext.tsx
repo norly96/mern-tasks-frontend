@@ -7,6 +7,7 @@ import {
 } from "react";
 import { User } from "../types/type";
 import { loginRequest, registerRequest, verifyToken } from "../api/auth";
+import { useTasks } from "./TaskContext";
 
 interface AuthContextType {
   user: User | null;
@@ -42,6 +43,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [errors, setErrors] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const { tasks } = useTasks();
+
   const signup = async (user: User) => {
     try {
       const res = await registerRequest(user);
@@ -71,8 +74,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     localStorage.removeItem("token");
-    setIsAuthenticated(false);
     setUser(null);
+    //clearTasks();
+    console.log(tasks);
+    setIsAuthenticated(false);
   };
 
   useEffect(() => {
@@ -100,7 +105,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setIsAuthenticated(true);
         setLoading(false);
         setUser(res);
-        console.log(res);
+        //console.log(res);
       } catch (error) {
         setIsAuthenticated(false);
         setLoading(false);

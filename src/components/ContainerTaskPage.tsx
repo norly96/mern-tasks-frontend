@@ -1,20 +1,18 @@
 import { Box, Grid, Text } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { Task } from "../types/type";
+import React, { useEffect, useState } from "react";
 import TaskCard from "./TaskCard";
 import { useTasks } from "../context/TaskContext";
+import { useAuth } from "../context/AuthContext";
 
-/* interface Props {
-  tasks: Task[];
-  getTasks: () => Promise<void>;
-}
- */
-const ContainerTaskPage = () => {
+const ContainerTaskPage = ({ handleEdit }: any) => {
   const { tasks, getTasks } = useTasks();
+  const { user } = useAuth();
 
   useEffect(() => {
-    getTasks();
-  }, []);
+    if (user) {
+      getTasks();
+    }
+  }, [user]);
 
   return (
     <Box ml={{ base: 0, md: 60 }} p="4">
