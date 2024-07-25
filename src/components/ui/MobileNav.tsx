@@ -48,7 +48,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         display={{ base: "flex", md: "none" }}
         boxSize="48px"
         ml="3"
-        src="/public/logo.png"
+        src="/logo.png"
         alt="Logo"
       />
 

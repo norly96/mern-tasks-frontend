@@ -91,7 +91,7 @@ const SidebarContent = ({ onClose, onModalOpen, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="3" justifyContent="space-between">
-        <Image boxSize="48px" ml="3" src="/public/logo.png" alt="Logo" />
+        <Image boxSize="48px" ml="3" src="/logo.png" alt="Logo" />
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
           TODO-TASKS
         </Text>

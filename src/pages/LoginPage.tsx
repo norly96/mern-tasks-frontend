@@ -46,7 +46,7 @@ const LoginPage = () => {
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
-          <Image src="/public/logo.png" alt="Logo" />
+          <Image src="/logo.png" alt="Logo" />
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           {loginError.map((error: any, i) => (
             <Alert status="error" key={i} mb={1} borderRadius="md">
