@@ -46,8 +46,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [reloading, setReloading] = useState<boolean>(false);
 
-  const { tasks } = useTasks();
-
   const signup = async (user: User) => {
     try {
       const res = await registerRequest(user);
