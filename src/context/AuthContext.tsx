@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.log(res.data);
       setUser(res.data);
       setIsAuthenticated(true);
+      localStorage.setItem("token", res.data.token);
     } catch (error: any) {
       console.log(error);
       setErrors(error.response.data.message);
