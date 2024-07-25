@@ -83,8 +83,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    //clearTasks();
-    console.log(tasks);
+    //console.log(tasks);
     setIsAuthenticated(false);
   };
 
@@ -100,7 +99,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     async function checkLogin() {
       const Token = localStorage.getItem("token");
-      console.log(Token);
+      //console.log(Token);
 
       if (!Token) {
         setIsAuthenticated(false);

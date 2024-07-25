@@ -1,12 +1,10 @@
-import { Box, Grid, Text } from "@chakra-ui/react";
+import { Box, Grid, Heading, Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
 import TaskCard from "./TaskCard";
 import { useTasks } from "../context/TaskContext";
-import { useAuth } from "../context/AuthContext";
 
 const ContainerTaskPage = () => {
   const { tasks, getTasks } = useTasks();
-  const { user } = useAuth();
 
   useEffect(() => {
     getTasks();
@@ -14,7 +12,16 @@ const ContainerTaskPage = () => {
 
   return (
     <Box ml={{ base: 0, md: 60 }} p="4">
-      {tasks.length === 0 && <Text>NO TASKS</Text>}
+      {tasks.length === 0 && (
+        <Flex
+          justifyContent={"center"}
+          mt={"-20"}
+          h={"100vh"}
+          alignItems={"center"}
+        >
+          <Heading>NO TASKS</Heading>
+        </Flex>
+      )}
 
       <Grid
         templateColumns={{

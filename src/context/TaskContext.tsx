@@ -47,7 +47,8 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
       const res = await createTaskRequest(task);
       console.log(res);
     } catch (error) {
-      console.log(error);
+      console.error("Error creating task: ", error);
+      throw error;
     }
   };
 
