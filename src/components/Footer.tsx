@@ -7,11 +7,7 @@ import {
   useColorModeValue,
   VisuallyHidden,
 } from "@chakra-ui/react";
-import {
-  IconBrandInstagram,
-  IconBrandLinkedin,
-  IconBrandGithub,
-} from "@tabler/icons-react";
+import { IconBrandLinkedin, IconBrandGithub } from "@tabler/icons-react";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
