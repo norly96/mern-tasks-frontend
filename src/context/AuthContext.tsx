@@ -7,7 +7,6 @@ import {
 } from "react";
 import { User } from "../types/type";
 import { loginRequest, registerRequest, verifyToken } from "../api/auth";
-import { useTasks } from "./TaskContext";
 
 interface AuthContextType {
   user: User | null;
