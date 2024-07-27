@@ -70,4 +70,4 @@ Name: Norluis Galvez Sanchez
 
 [Linkedin](https://www.linkedin.com/in/norly96): https://www.linkedin.com/in/norly96
 
-[Web](https://www.norly96.com):
+[Web](https://www.norly96.com): https://www.norly96.com
