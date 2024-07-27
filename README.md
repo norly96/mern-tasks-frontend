@@ -22,7 +22,7 @@ Todo-tasks is a web application that allows users to authenticate and manage the
 
 Deploy by Vercel
 
-- Site URL: [TODO-Tasks](https://https://todo-tasks-sigma.vercel.app/)
+- Site URL: [TODO-Tasks](https://todo-tasks-sigma.vercel.app/)
 
 ## Installation
 
@@ -40,13 +40,13 @@ https://github.com/norly96/mern-tasks-frontend.git
 cd mern-tasks-frontend
 ```
 
-3. Install the backend dependencies:
+3. Install the dependencies:
 
 ```bash
 npm install
 ```
 
-4. Set your environment variables. Create an .env file in the project root directory and add your TMDB API key:
+4. Set your environment variables. Create an .env file in the project root directory and add the API-URL:
 
 ```bash
 VITE_API=https://mern-tasks-backend.vercel.app
@@ -64,6 +64,7 @@ npm run dev
 
 ## Contact
 
-    Name: Norluis Galvez Sanchez
-    GitHub: https://github.com/norly96
-    Linkedin: https://www.linkedin.com/in/norly96
+Name: Norluis Galvez Sanchez
+[GitHub](https://github.com/norly96): https://github.com/norly96
+[Linkedin](https://www.linkedin.com/in/norly96): https://www.linkedin.com/in/norly96
+[Web](https://www.norly96.com):
