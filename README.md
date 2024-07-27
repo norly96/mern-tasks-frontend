@@ -65,6 +65,9 @@ npm run dev
 ## Contact
 
 Name: Norluis Galvez Sanchez
+
 [GitHub](https://github.com/norly96): https://github.com/norly96
+
 [Linkedin](https://www.linkedin.com/in/norly96): https://www.linkedin.com/in/norly96
+
 [Web](https://www.norly96.com):
