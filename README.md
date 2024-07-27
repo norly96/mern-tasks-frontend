@@ -1,30 +1,69 @@
-# React + TypeScript + Vite
+# TODO-Tasks
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Todo-tasks is a web application that allows users to authenticate and manage their personal tasks. Each user can create, edit, delete, and view their tasks.
 
-Currently, two official plugins are available:
+### Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Authentication: User registration and login.
+2. Task Management: Create, edit, delete, and view tasks.
+3. User Interface: Built with React and TypeScript.
+4. Backend: Built with Node.js, Express, and MongoDB.
+5. Validation: Uses Zod for schema validation.
 
-## Expanding the ESLint configuration
+### Screenshot
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+![](./public/home.png)
 
-- Configure the top-level `parserOptions` property like this:
+![](./public/login.png)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+![](./public/tasks.png)
+
+### Links
+
+Deploy by Vercel
+
+- Site URL: [TODO-Tasks](https://https://todo-tasks-sigma.vercel.app/)
+
+## Installation
+
+To run this project on your local machine, follow these steps:
+
+1. Clone the repository:
+
+```bash
+https://github.com/norly96/mern-tasks-frontend.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Navigate to the project directory:
+
+```bash
+cd mern-tasks-frontend
+```
+
+3. Install the backend dependencies:
+
+```bash
+npm install
+```
+
+4. Set your environment variables. Create an .env file in the project root directory and add your TMDB API key:
+
+```bash
+VITE_API=https://mern-tasks-backend.vercel.app
+```
+
+5. Start the server
+
+```bash
+npm run dev
+```
+
+## Used technologies
+
+1. HTML, CSS, TypeScript, ReactJS, Chakra UI, React-Hook-Form, React Router
+
+## Contact
+
+    Name: Norluis Galvez Sanchez
+    GitHub: https://github.com/norly96
+    Linkedin: https://www.linkedin.com/in/norly96

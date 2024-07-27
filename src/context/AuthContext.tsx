@@ -51,6 +51,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.log(res.data);
       setUser(res.data);
       setIsAuthenticated(true);
+      console.log(res.data);
+
       localStorage.setItem("token", res.data.token);
     } catch (error: any) {
       console.log(error);
@@ -66,7 +68,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsAuthenticated(true);
       localStorage.setItem("token", res.data.token);
       setReloading(true);
-      // Simular una recarga de la página con un pequeño retraso
+
       setTimeout(() => {
         window.location.reload();
       }, 500);
